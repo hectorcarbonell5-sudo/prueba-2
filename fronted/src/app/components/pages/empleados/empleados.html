@@ -1,1 +1,77 @@
-<p>empleados works!</p>
+<h2>Empleados</h2>
+
+<!-- 🔽 FORMULARIO -->
+<div class="row mb-3">
+  <div class="col">
+    <input type="number" [(ngModel)]="newEmp.codigo" placeholder="Código" required />
+    <br />
+    <input [(ngModel)]="newEmp.nombre" placeholder="Nombre" />
+    <br />
+    <input [(ngModel)]="newEmp.apellido1" placeholder="Apellido 1" />
+    <br />
+    <input [(ngModel)]="newEmp.apellido2" placeholder="Apellido 2" />
+    <br />
+    <input type="number" [(ngModel)]="newEmp.codigo_departamento" placeholder="Departamento" />
+    <br />
+    <button (click)="save()" [disabled]="!newEmp.codigo" class="btn btn-primary">
+      {{ editing ? 'Actualizar' : 'Guardar' }}
+    </button>
+    <button (click)="loadEmployees()">Listar empleados</button>
+    @if (editing) {
+      <button (click)="resetForm()">Cancelar</button>
+    }
+  </div>
+</div>
+
+<hr />
+
+<!-- 🔽 FILTRO POR DEPARTAMENTO -->
+@if (departamentos.length > 0) {
+  <div>
+    <h3>Departamentos: {{ selectedDepartamento.nombre }}</h3>
+  </div>
+}
+
+<!-- ⏳ CARGANDO -->
+@if (loading) {
+  <p>Cargando empleados...</p>
+}
+
+<!-- 📊 LISTA -->
+
+<table class="table table-striped-columns">
+  <thead>
+    <th scope="col">Codigo</th>
+    <th scope="col">Nombres</th>
+    <th scope="col">Apellido 1</th>
+    <th scope="col">Apellido 2</th>
+    <th scope="col">Departamento</th>
+  </thead>
+  <tbody table-group-divider>
+    @for (d of empleados; track d._id) {
+      <tr>
+        <td>
+          {{ d.codigo }}
+        </td>
+        <td>
+          {{ d.nombre }}
+        </td>
+        <td>
+          {{ d.apellido1 }}
+        </td>
+        <td>
+          {{ d.apellido2 }}
+        </td>
+        <td>
+          {{ d.codigo_departamento }}
+        </td>
+        <button (click)="edit(d)">Editar</button>
+        <button (click)="delete(d.codigo)">Eliminar</button>
+      </tr>
+    }
+  </tbody>
+</table>
+<!-- ❌ VACÍO -->
+@if (!loading && empleados.length === 0) {
+  <p>No hay empleados</p>
+}

@@ -1,10 +1,11 @@
-import { Component,inject,OnInit,ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { EmpleadosService } from '../../../services/empleados';  
 
 @Component({
   selector: 'app-empleados',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './empleados.html',
   styleUrl: './empleados.css',
